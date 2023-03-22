@@ -10,7 +10,7 @@ const EditUser = () => {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users);
   const navigate = useNavigate();
-  const existingUser = users.filter((user) => user.id === params.id);
+  const existingUser = users.filter((user) => user.employeeId === params.employeeId);
   const { name, email } = existingUser[0];
   const [values, setValues] = useState({
     name,
@@ -21,7 +21,7 @@ const EditUser = () => {
     setValues({ name: "", email: "" });
     dispatch(
       editUser({
-        id: params.id,
+        id: params.employeeId,
         name: values.name,
         email: values.email,
       })
@@ -31,7 +31,7 @@ const EditUser = () => {
 
   return (
     <div className="mt-10 max-w-xl mx-auto">
-      <TextField
+      {/* <TextField
         label="Name"
         value={values.name}
         onChange={(e) => setValues({ ...values, name: e.target.value })}
@@ -44,7 +44,8 @@ const EditUser = () => {
         onChange={(e) => setValues({ ...values, email: e.target.value })}
         inputProps={{ type: "email", placeholder: "jhondoe@mail.com" }}
       />
-      <AddUserButton onClick={handleEditUser}>Edit</AddUserButton>
+      <AddUserButton onClick={handleEditUser}>Edit</AddUserButton> */}
+      papsdapdaodpas
     </div>
   );
 };

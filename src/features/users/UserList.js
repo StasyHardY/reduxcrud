@@ -10,40 +10,38 @@ const UserList = () => {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users.users);
 
-  const userss = useSelector((state) => state.users.users)
-
-  const hadleRemoveUser = (id) => {
-    dispatch(deleteUser({ id }));
+  const hadleRemoveUser = (employeeId, name) => {
+    dispatch(deleteUser({employeeId}));
+    console.log(`user with ${employeeId} and ${name} delete`)
   };
 
   useEffect(() => {
-    dispatch(getUsers())
-  }, [userss])
+    
+  },)
 
   
-
-
   const renderCard = () =>
+  users.length > 0 ? (
     users.map((user) => (
       <div
         className="bg-gray-300 p-5 w-full flex items-center justify-between"
-        key={user.id}
+        key={user.employeeId}
       >
         
         <div className="flex flex-col items-center justify-center gap-4">
-          
-        {userss === false ? <div>пусто</div> : <button className="border-2  p-2" onClick={() => dispatch(getUsers())}>Получить сотрудников</button> }
-        <div className="flex flex-start flex-col text-start">
-          сотРУдниКИ
+       
+        <div className="flex flex-start gap-2 text-start font-bold">
+          <h1>{user.firstName}</h1>
+          <h3>{user.lastName}</h3>
         
         </div>
         </div>
         <div>
-          <h3 className="font-bold text-lg text-gray-700">{users.name}</h3>
+          <h3 className="font-bold text-lg text-gray-700">{user.name}</h3>
           <span className="font-normal text-gray-600">{user.email}</span>
         </div>
         <div className="flex gap-4 items-center justify-center">
-          <Link to={`edit-user/${user.id}`}>
+          <Link to={`edit-user/${user.employeeId}`}>
             <button>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -62,7 +60,7 @@ const UserList = () => {
             </button>
           </Link>
 
-          <button onClick={() => hadleRemoveUser(user.id)}>
+          <button onClick={() => hadleRemoveUser(user.employeeId, user.firstName)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
@@ -80,10 +78,18 @@ const UserList = () => {
           </button>
         </div>
       </div>
-    ));
+    ))
+  ) : (
+    <>
+     <div>Пользователей нет</div>
+    <button onClick={() => dispatch(getUsers())}>получить</button>
+    </>
+   
+  )
+    
   return (
     <div className="flex w-full flex-col items-center">
-      {userss !== [] ? ' не пустой массив' : 'пустой массив'}
+      
       
       
       <Link to="/add-user">
@@ -96,18 +102,10 @@ const UserList = () => {
       
     ))} */}
       <div className="w-full">
-        {users ? (
+        {users && users.length >= 0 ? (
           renderCard()
-        ) : users?.map(user => (
-          <div key={user.employeeId}>
-          
-          <div>{user.firstName}</div>
-          </div>
-        )) (
-          
-         
-          
-          
+        ) : (
+          <div>Загрузка пользователей...</div>
         )}
       </div>
     </div>
